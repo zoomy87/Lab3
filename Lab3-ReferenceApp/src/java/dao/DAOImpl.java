@@ -60,7 +60,7 @@ public class DAOImpl implements DAO {
         return rowCount;
     }
     
-    public static boolean checkEmail(User user){
+    public boolean checkEmail(User user){
         boolean userExist = true;
         Statement stmt;
         ResultSet rs;
@@ -77,7 +77,7 @@ public class DAOImpl implements DAO {
             Connection DBConn = DriverManager.getConnection(myDB, "itkstu", "student");
             //todo make select statement to verify user does not exist check if null return true
             stmt = DBConn.createStatement();
-            query = "SELECT * FROM users WHERE userid ='"+ user.getUserID +"';";
+            query = "SELECT * FROM users WHERE userid ='"+ user.getUserID() +"';";
             rs = stmt.executeQuery(query);
             if(rs.next())
                 userExist = true;
