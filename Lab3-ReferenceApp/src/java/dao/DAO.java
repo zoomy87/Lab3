@@ -5,10 +5,18 @@
  */
 package dao;
 
+import model.User;
+
 /**
  *
  * @author ejzumba
  */
 public interface DAO {
+    
+    public int insertUser(User user);
+    
+    public boolean checkUserEmail(User user);
+    
+    public boolean checkUserID(User user);
     
 }
