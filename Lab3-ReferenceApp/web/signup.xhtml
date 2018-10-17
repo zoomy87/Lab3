@@ -25,42 +25,44 @@
                 <div class="col-md-4">
                     <h3 class="text-center">Sign Up</h3>
                     <hr />
-                    <h:form>
+                    <h:form id="signUp">
                         <div class="form-group">
                             <label for="exampleInputEmail1">First Name</label>
-                            <input type="text" class="form-control input-sm" id="exampleInputEmail1" />
+                            <h:inputText class="form-control input-sm" id="fName" />
                         </div>
                         <div class="form-group">
                             <label for="exampleInputPassword1">Last Name</label>
-                            <input type="text" class="form-control input-sm" id="exampleInputPassword1" />
+                            <h:inputText class="form-control input-sm" id="lName" />
                         </div>
                         <div class="form-group">
                             <label for="exampleInputEmail1">User ID</label>
-                            <input type="text" class="form-control input-sm" id="exampleInputEmail1" />
+                            <h:inputText class="form-control input-sm" id="userID" />
+                            <h:message class="error" for="userID" id="userIDError"/>
                         </div>
                         <div class="form-group">
                             <label for="exampleInputEmail1">Password</label>
-                            <input type="password" class="form-control input-sm" id="exampleInputEmail1" />
+                            <h:inputSecret class="form-control input-sm" id="password" />
                         </div>
                         <div class="form-group">
                             <label for="exampleInputEmail1">Confirm Password</label>
-                            <input type="text" class="form-control input-sm" id="exampleInputEmail1" />
+                            <h:inputText class="form-control input-sm" id="confirmPassword" />
                         </div>
                         <div class="form-group">
                             <label for="exampleInputEmail1">Email</label>
-                            <input type="email" class="form-control input-sm" id="exampleInputEmail1" />
+                            <h:inputText class="form-control input-sm" id="email" />
+                            <h:message class="error" for="email" id="emailError"/>
                         </div>
                         <div class="form-group">
                             <label for="exampleInputEmail1">Security Question</label>
-                            <input type="text" class="form-control input-sm" id="exampleInputEmail1" />
+                            <h:inputText class="form-control input-sm" id="question" />
                         </div>
                         <div class="form-group">
                             <label for="exampleInputEmail1">Security Answer</label>
-                            <input type="text" class="form-control input-sm" id="exampleInputEmail1" />
+                            <h:inputText class="form-control input-sm" id="answer" />
                         </div>
                         <div class="row">
                             <div class="col-md-12">
-                                <h:commandButton class="btn btn-default btn-block btn-sm btn-info" value="Submit" action="signup?redirect=true"  />
+                                <h:commandButton class="btn btn-default btn-block btn-sm btn-info" value="Submit" action="#{loginController.createUser()}"  />
                             </div>
                         </div>
                     </h:form>

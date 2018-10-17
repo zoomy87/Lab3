@@ -9,6 +9,10 @@ import javax.faces.bean.ManagedBean;
 import javax.inject.Named;
 import javax.faces.bean.SessionScoped;
 import model.User;
+import dao.DAO;
+import dao.DAOImpl;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 
 /**
  *
@@ -20,12 +24,13 @@ import model.User;
 public class LoginController {
     
     User model;
-        
+    DAO DAOImpl;
     
     /**
      * Creates a new instance of LoginController
      */
     public LoginController() {
+        model = new User();
     }
 
     public User getModel() {
@@ -38,6 +43,25 @@ public class LoginController {
     
     public void authenticate(){
         
+    }
+    
+    public void createUser(){
+        FacesContext.getCurrentInstance().addMessage("signUp:email", new FacesMessage("Email Error"));
+        FacesContext.getCurrentInstance().addMessage("signUp:userID", new FacesMessage("userID Error"));
+    }
+    
+    public String response(){
+        String response;
+        DAOImpl = new DAOImpl();
+        
+        if(!DAOImpl.checkUserEmail(model)){
+            DAOImpl.insertUser(model);
+        }
+        else{
+            
+        }
+        
+        return "";
     }
     
 }
