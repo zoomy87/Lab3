@@ -21,8 +21,9 @@ import model.User;
  */
 public class DAOImpl implements DAO {
 
-    private final Logger log = Logger.getLogger(DAOImpl.class.getName());
+    private static final Logger log = Logger.getLogger(DAOImpl.class.getName());
 
+    @Override
     public int insertUser(User user) {
         int rowCount = 0;
         try {
@@ -32,11 +33,11 @@ public class DAOImpl implements DAO {
             System.exit(0);
         }
         try {
-            String myDB = "jdbc:derby://localhost:1527/profile";// connection string
+            String myDB = "jdbc:derby://localhost:1527/LAB3";// connection string
             Connection DBConn = DriverManager.getConnection(myDB, "itkstu", "student");
 
             String insertString;
-            Statement stmt = DBConn.createStatement();
+//            Statement stmt = DBConn.createStatement();
             insertString = "INSERT INTO users (fname, lname, userid, password, question, answer, email) VALUES (?,?,?,?,?,?,?)";
             PreparedStatement pstmt = DBConn.prepareStatement(insertString);
             pstmt.setString(1, user.getfName());
@@ -56,6 +57,7 @@ public class DAOImpl implements DAO {
         return rowCount;
     }
 
+    @Override
     public boolean checkUserEmail(User user) {
         boolean userExist = false;
         Statement stmt;
@@ -85,6 +87,7 @@ public class DAOImpl implements DAO {
         return userExist;
     }
 
+    @Override
     public boolean checkUserID(User user) {
         boolean userExist = false;
         Statement stmt;
@@ -99,14 +102,14 @@ public class DAOImpl implements DAO {
 
         try {
             String myDB = "jdbc:derby://localhost:1527/profile";// connection string
-            Connection DBConn = DriverManager.getConnection(myDB, "itkstu", "student");
-            stmt = DBConn.createStatement();
-            query = "SELECT * FROM users WHERE userid ='" + user.getUserID() + "'";
-            rs = stmt.executeQuery(query);
-            if (rs.next()) {
-                userExist = true;
+            try (Connection DBConn = DriverManager.getConnection(myDB, "itkstu", "student")) {
+                stmt = DBConn.createStatement();
+                query = "SELECT * FROM users WHERE userid ='" + user.getUserID() + "'";
+                rs = stmt.executeQuery(query);
+                if (rs.next()) {
+                    userExist = true;
+                }
             }
-            DBConn.close();
         } catch (SQLException ex) {
             log.log(Level.SEVERE, null, ex);
         }
@@ -114,6 +117,7 @@ public class DAOImpl implements DAO {
         return userExist;
     }
 
+    @Override
     public User getUser(User user) {
         User retVal = null;
 
@@ -148,8 +152,9 @@ public class DAOImpl implements DAO {
         return retVal;
     }
     
-    public User authenticateUser(User user){
-        User retVal = null;
+    @Override
+    public String getPass(String email){
+        String retVal = null;
         
         try {
             Class.forName("org.apache.derby.jdbc.ClientDriver");
@@ -163,21 +168,15 @@ public class DAOImpl implements DAO {
 
             String insertString;
             Statement stmt = DBConn.createStatement();
-            insertString = "select * from users where email ='" + user.getEmail() + "'";
+            insertString = "select password from users where email ='" + email + "'";
             ResultSet rs = stmt.executeQuery(insertString);
             //todo return user to verify password in login controller.
-//             if (rs.next()) {
-//                retVal = new User();
-//                retVal.setfName(rs.getString("fname"));
-//                retVal.setlName(rs.getString("lname"));
-//                retVal.setUserID(rs.getString("userid"));
-//                retVal.setPassword(rs.getString("password"));
-//                retVal.setQuestion(rs.getString("question"));
-//                retVal.setAnswer(rs.getString("answer"));
-//                retVal.setEmail(rs.getString("email"));
-//            }
+             if (rs.next()) {
+                retVal = rs.getString("password");
+
+            }
         }catch (SQLException ex) {
-            
+            log.log(Level.SEVERE, ex.getMessage());
         }
         return retVal;
     }

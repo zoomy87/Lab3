@@ -51,9 +51,11 @@ public class LoginController {
     }
     
     public String authenticate(){
+        DAOImpl = new DAOImpl();
+        String pass= DAOImpl.getPass(model.getEmail());
+        String retVal= pass.equals(model.getPassword())? "login-success.xhtml": "error.xhtml";
         
-        
-        return "login-success.xhtml";
+        return retVal;
     }
     
     public void retriveUser(){
@@ -65,7 +67,7 @@ public class LoginController {
     public String createUser(){
         String response;
         DAOImpl = new DAOImpl();
-        boolean isEmail= !DAOImpl.checkUserEmail(model);
+        boolean isEmail= DAOImpl.checkUserEmail(model);
         boolean isUserID= DAOImpl.checkUserID(model);
         if(isEmail){
             FacesContext.getCurrentInstance().addMessage("signUp:email", new FacesMessage("Email already exists in database"));

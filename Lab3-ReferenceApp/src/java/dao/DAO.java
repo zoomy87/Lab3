@@ -21,4 +21,6 @@ public interface DAO {
     
     public User getUser(User user);
     
+    public String getPass(String email);
+    
 }
