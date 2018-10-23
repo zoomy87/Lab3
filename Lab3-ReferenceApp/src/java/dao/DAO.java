@@ -19,4 +19,8 @@ public interface DAO {
     
     public boolean checkUserID(User user);
     
+    public User getUser(User user);
+    
+    public String getPass(String email);
+    
 }

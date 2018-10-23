@@ -18,13 +18,22 @@ import javax.faces.context.FacesContext;
  *
  * @author ejzumba
  */
-@Named(value = "loginController")
+//@Named(value = "loginController")
 @SessionScoped
 @ManagedBean
 public class LoginController {
     
     User model;
+    User DAOUser;
     DAO DAOImpl;
+
+    public User getDAOUser() {
+        return DAOUser;
+    }
+
+    public void setDAOUser(User DAOUser) {
+        this.DAOUser = DAOUser;
+    }
     
     /**
      * Creates a new instance of LoginController
@@ -41,13 +50,38 @@ public class LoginController {
         this.model = model;
     }
     
-    public void authenticate(){
+    public String authenticate(){
+        DAOImpl = new DAOImpl();
+        String pass= DAOImpl.getPass(model.getEmail());
+        String retVal= pass.equals(model.getPassword())? "login-success.xhtml": "error.xhtml";
+        
+        return retVal;
+    }
+    
+    public void retriveUser(){
+        DAOImpl = new DAOImpl();
+        DAOUser = DAOImpl.getUser(model);
         
     }
     
-    public void createUser(){
-        FacesContext.getCurrentInstance().addMessage("signUp:email", new FacesMessage("Email Error"));
-        FacesContext.getCurrentInstance().addMessage("signUp:userID", new FacesMessage("userID Error"));
+    public String createUser(){
+        String response;
+        DAOImpl = new DAOImpl();
+        boolean isEmail= DAOImpl.checkUserEmail(model);
+        boolean isUserID= DAOImpl.checkUserID(model);
+        if(isEmail){
+            FacesContext.getCurrentInstance().addMessage("signUp:email", new FacesMessage("Email already exists in database"));
+        }
+        if(isUserID){
+            FacesContext.getCurrentInstance().addMessage("signUp:userID", new FacesMessage("userID Error"));
+            }
+        if(!isUserID && !isEmail){       
+            DAOImpl.insertUser(model);
+            response= "login-success.xhtml";
+        }
+        
+        return "";        
+//         
     }
     
     public String response(){
@@ -58,7 +92,7 @@ public class LoginController {
             DAOImpl.insertUser(model);
         }
         else{
-            
+            FacesContext.getCurrentInstance().addMessage("signUp:email", new FacesMessage("Email already exists in database"));
         }
         
         return "";
