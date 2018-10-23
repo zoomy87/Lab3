@@ -53,7 +53,7 @@ public class LoginController {
     public String authenticate(){
         DAOImpl = new DAOImpl();
         String pass= DAOImpl.getPass(model.getEmail());
-        String retVal= pass.equals(model.getPassword())? "login-success.xhtml": "error.xhtml";
+        String retVal= pass.equals(model.getPassword())? "echo.xhtml": "error.xhtml";
         
         return retVal;
     }
@@ -77,7 +77,7 @@ public class LoginController {
             }
         if(!isUserID && !isEmail){       
             DAOImpl.insertUser(model);
-            response= "login-success.xhtml";
+            response= "echo.xhtml";
         }
         
         return "";        
