@@ -22,7 +22,7 @@ import javax.faces.context.FacesContext;
 @SessionScoped
 @ManagedBean
 public class LoginController {
-    
+
     User model;
     User DAOUser;
     DAO DAOImpl;
@@ -34,7 +34,7 @@ public class LoginController {
     public void setDAOUser(User DAOUser) {
         this.DAOUser = DAOUser;
     }
-    
+
     /**
      * Creates a new instance of LoginController
      */
@@ -49,53 +49,58 @@ public class LoginController {
     public void setModel(User model) {
         this.model = model;
     }
-    
-    public String authenticate(){
+
+    public String authenticate() {
         DAOImpl = new DAOImpl();
-        String pass= DAOImpl.getPass(model.getEmail());
-        String retVal= pass.equals(model.getPassword())? "echo.xhtml": "error.xhtml";
-        
+        String pass = DAOImpl.getPass(model.getEmail());
+        String retVal = pass.equals(model.getPassword()) ? "echo.xhtml" : "error.xhtml";
+
         return retVal;
     }
-    
-    public void retriveUser(){
+
+    public void retriveUser() {
         DAOImpl = new DAOImpl();
         DAOUser = DAOImpl.getUser(model);
-        
+
     }
-    
-    public String createUser(){
+
+    public String createUser() {
         String response;
         DAOImpl = new DAOImpl();
-        boolean isEmail= DAOImpl.checkUserEmail(model);
-        boolean isUserID= DAOImpl.checkUserID(model);
-        if(isEmail){
+        boolean isEmail = DAOImpl.checkUserEmail(model);
+        boolean isUserID = DAOImpl.checkUserID(model);
+        boolean isPasswordMatch = model.getPassword().equals(model.getConfirmPassword());
+        if (isEmail) {
             FacesContext.getCurrentInstance().addMessage("signUp:email", new FacesMessage("Email already exists in database"));
         }
-        if(isUserID){
+        if (isUserID) {
             FacesContext.getCurrentInstance().addMessage("signUp:userID", new FacesMessage("userID Error"));
-            }
-        if(!isUserID && !isEmail){       
-            DAOImpl.insertUser(model);
-            response= "echo.xhtml";
         }
         
-        return "";        
+        if(!isPasswordMatch){
+            FacesContext.getCurrentInstance().addMessage("signUp:password", new FacesMessage("Passwords do not match"));
+        }
+        
+        if (!isUserID && !isEmail && isPasswordMatch) {
+            DAOImpl.insertUser(model);
+            response = "echo.xhtml";
+        }
+
+        return "";
 //         
     }
-    
-    public String response(){
+
+    public String response() {
         String response;
         DAOImpl = new DAOImpl();
-        
-        if(!DAOImpl.checkUserEmail(model)){
+
+        if (!DAOImpl.checkUserEmail(model)) {
             DAOImpl.insertUser(model);
-        }
-        else{
+        } else {
             FacesContext.getCurrentInstance().addMessage("signUp:email", new FacesMessage("Email already exists in database"));
         }
-        
+
         return "";
     }
-    
+
 }

@@ -47,15 +47,13 @@
                         </div>
                         <div class="form-group">
                             <label for="exampleInputEmail1">Password</label>
-                            <h:inputSecret class="form-control input-sm" id="password" value="#{loginController.model.password}" >
-                                <f:attribute name="param"  /> <!--value="password"-->
-                            </h:inputSecret>
+                            <h:inputSecret class="form-control input-sm" id="password" value="#{loginController.model.password}" />
+                            <h:message class="error" for="password" id="confirmPasswordError"/>
                         </div>
                         <div class="form-group" id="cpass">
                             <label for="exampleInputEmail1">Confirm Password</label>
-                            <h:inputText class="form-control input-sm" id="confirmPassword" > 
-                                <f:validator validatorId="password"/>
-                            </h:inputText>
+                            <h:inputText class="form-control input-sm" id="confirmPassword" value="#{loginController.model.confirmPassword}" /> 
+                            <h:message class="error" for="password" id="passwordError"/>
                         </div>
                         <div class="form-group">
                             <label for="exampleInputEmail1">Email</label>
@@ -80,7 +78,7 @@
             </div>
         </div>
     </h:body>
-    <script lang="javascript">
+<!--    <script lang="javascript">
         $.ready(){
             function confirmPass(){
                 var pass= document.getElementById("password");
@@ -92,5 +90,5 @@
             
             $("#confirmPassword").keyup(confirmPass());
         }
-    </script>
+    </script>-->
 </html>

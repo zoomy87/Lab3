@@ -17,6 +17,15 @@ public class User {
     String email;
     String question;
     String answer;
+    String confirmPassword;
+
+    public String getConfirmPassword() {
+        return confirmPassword;
+    }
+
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
+    }
 
     public String getfName() {
         return fName;
