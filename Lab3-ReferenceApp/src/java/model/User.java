@@ -10,6 +10,7 @@ package model;
  * @author ejzumba
  */
 public class User {
+
     String fName;
     String lName;
     String userID;
@@ -82,8 +83,5 @@ public class User {
     public void setAnswer(String answer) {
         this.answer = answer;
     }
-
-    
-
 
 }

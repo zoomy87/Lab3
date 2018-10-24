@@ -53,7 +53,11 @@ public class LoginController {
     public String authenticate() {
         DAOImpl = new DAOImpl();
         String pass = DAOImpl.getPass(model.getEmail());
-        String retVal = pass.equals(model.getPassword()) ? "echo.xhtml" : "error.xhtml";
+        String retVal = pass.equals(model.getPassword()) ? "LoginGood.xhtml" : "";
+        
+//        if (retVal.equals("")) {
+//            FacesContext.getCurrentInstance().addMessage("login:inputPassword", new FacesMessage("Username or Password does not match"));
+//        }
 
         return retVal;
     }
@@ -61,32 +65,31 @@ public class LoginController {
     public void retriveUser() {
         DAOImpl = new DAOImpl();
         DAOUser = DAOImpl.getUser(model);
-
     }
 
     public String createUser() {
-        String response;
+        String response = "";
         DAOImpl = new DAOImpl();
         boolean isEmail = DAOImpl.checkUserEmail(model);
         boolean isUserID = DAOImpl.checkUserID(model);
         boolean isPasswordMatch = model.getPassword().equals(model.getConfirmPassword());
         if (isEmail) {
-            FacesContext.getCurrentInstance().addMessage("signUp:email", new FacesMessage("Email already exists in database"));
+            FacesContext.getCurrentInstance().addMessage("signUp:email", new FacesMessage("Email is already used"));
         }
         if (isUserID) {
-            FacesContext.getCurrentInstance().addMessage("signUp:userID", new FacesMessage("userID Error"));
+            FacesContext.getCurrentInstance().addMessage("signUp:userID", new FacesMessage("User ID is already taken"));
         }
-        
-        if(!isPasswordMatch){
+
+        if (!isPasswordMatch) {
             FacesContext.getCurrentInstance().addMessage("signUp:password", new FacesMessage("Passwords do not match"));
         }
-        
+
         if (!isUserID && !isEmail && isPasswordMatch) {
             DAOImpl.insertUser(model);
             response = "echo.xhtml";
         }
 
-        return "";
+        return response;
 //         
     }
 

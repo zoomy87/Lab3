@@ -22,6 +22,7 @@ import model.User;
 public class DAOImpl implements DAO {
 
     private static final Logger log = Logger.getLogger(DAOImpl.class.getName());
+    private static final String myDB = "jdbc:derby://localhost:1527/Project353";
 
     @Override
     public int insertUser(User user) {
@@ -33,11 +34,9 @@ public class DAOImpl implements DAO {
             System.exit(0);
         }
         try {
-            String myDB = "jdbc:derby://localhost:1527/LAB3";// connection string
             Connection DBConn = DriverManager.getConnection(myDB, "itkstu", "student");
 
             String insertString;
-//            Statement stmt = DBConn.createStatement();
             insertString = "INSERT INTO users (fname, lname, userid, password, question, answer, email) VALUES (?,?,?,?,?,?,?)";
             PreparedStatement pstmt = DBConn.prepareStatement(insertString);
             pstmt.setString(1, user.getfName());
@@ -48,7 +47,7 @@ public class DAOImpl implements DAO {
             pstmt.setString(6, user.getAnswer());
             pstmt.setString(7, user.getEmail());
 
-            rowCount = pstmt.executeUpdate(); //stmt.executeUpdate(insertString);
+            rowCount = pstmt.executeUpdate();
             System.out.println("insert string =" + insertString);
             DBConn.close();
         } catch (SQLException ex) {
@@ -71,10 +70,9 @@ public class DAOImpl implements DAO {
         }
 
         try {
-            String myDB = "jdbc:derby://localhost:1527/profile";// connection string
             Connection DBConn = DriverManager.getConnection(myDB, "itkstu", "student");
             stmt = DBConn.createStatement();
-            query = "SELECT * FROM users WHERE userid ='" + user.getEmail() + "'";
+            query = "SELECT * FROM users WHERE email ='" + user.getEmail() + "'";
             rs = stmt.executeQuery(query);
             if (rs.next()) {
                 userExist = true;
@@ -101,7 +99,6 @@ public class DAOImpl implements DAO {
         }
 
         try {
-            String myDB = "jdbc:derby://localhost:1527/profile";// connection string
             try (Connection DBConn = DriverManager.getConnection(myDB, "itkstu", "student")) {
                 stmt = DBConn.createStatement();
                 query = "SELECT * FROM users WHERE userid ='" + user.getUserID() + "'";
@@ -128,14 +125,12 @@ public class DAOImpl implements DAO {
             System.exit(0);
         }
         try {
-            String myDB = "jdbc:derby://localhost:1527/lab3";// connection string
             Connection DBConn = DriverManager.getConnection(myDB, "itkstu", "student");
 
             String insertString;
             Statement stmt = DBConn.createStatement();
             insertString = "select * from users where email ='" + user.getEmail() + "'";
             ResultSet rs = stmt.executeQuery(insertString);
-//               (fname, lname, userid, password, question, answer, email)
             if (rs.next()) {
                 retVal = new User();
                 retVal.setfName(rs.getString("fname"));
@@ -151,11 +146,11 @@ public class DAOImpl implements DAO {
         }
         return retVal;
     }
-    
+
     @Override
-    public String getPass(String email){
+    public String getPass(String email) {
         String retVal = null;
-        
+
         try {
             Class.forName("org.apache.derby.jdbc.ClientDriver");
         } catch (ClassNotFoundException e) {
@@ -163,23 +158,19 @@ public class DAOImpl implements DAO {
             System.exit(0);
         }
         try {
-            String myDB = "jdbc:derby://localhost:1527/lab3";// connection string
             Connection DBConn = DriverManager.getConnection(myDB, "itkstu", "student");
 
             String insertString;
             Statement stmt = DBConn.createStatement();
             insertString = "select password from users where email ='" + email + "'";
             ResultSet rs = stmt.executeQuery(insertString);
-            //todo return user to verify password in login controller.
-             if (rs.next()) {
+            if (rs.next()) {
                 retVal = rs.getString("password");
 
             }
-        }catch (SQLException ex) {
+        } catch (SQLException ex) {
             log.log(Level.SEVERE, ex.getMessage());
         }
         return retVal;
     }
-
-//        select * from users where email ='ek@email.com';
 }

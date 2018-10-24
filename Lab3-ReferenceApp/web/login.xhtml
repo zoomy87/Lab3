@@ -25,15 +25,15 @@
                 <div class="col-md-4">
                     <h3 class="text-center">Login</h3>
                     <hr />
-                    <h:form>
+                    <h:form id="login">
                         <div class="form-group">
                             <label for="exampleInputEmail1">Email address</label>
                             <h:inputText value="#{loginController.model.email}" id="inputEmail" />
-                            
                         </div>
                         <div class="form-group">
                             <label for="exampleInputPassword1">Password</label>
                             <h:inputSecret value="#{loginController.model.password}" id="inputPassword" />
+                            <h:message class="error" for="inputPassword" id="confirmPasswordError"/>
                         </div>
                         <div class="row">
                             <div class="col-md-6">
