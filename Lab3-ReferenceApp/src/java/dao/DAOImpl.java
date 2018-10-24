@@ -48,7 +48,7 @@ public class DAOImpl implements DAO {
             pstmt.setString(7, user.getEmail());
 
             rowCount = pstmt.executeUpdate();
-            System.out.println("insert string =" + insertString);
+            System.out.println("insert string =" + insertString +"rowCount: "+rowCount);
             DBConn.close();
         } catch (SQLException ex) {
             log.log(Level.SEVERE, null, ex);

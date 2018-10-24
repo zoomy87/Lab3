@@ -4,11 +4,9 @@ create table USERS (
     lName varchar (50),
     userID varchar (50) ,
     password varchar(50),
-    question varchar (200),
-    answer varchar (200),
-    email varchar (150),
-primary key (userID),
-unique(email)
+    question varchar (50),
+    answer varchar (50),
+    email varchar (50)
 );
 
 INSERT INTO Users ( fName, lName, userID, password, question, answer, email ) 

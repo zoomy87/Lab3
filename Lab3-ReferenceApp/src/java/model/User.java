@@ -5,20 +5,23 @@
  */
 package model;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  *
  * @author ejzumba
  */
 public class User {
 
-    String fName;
-    String lName;
-    String userID;
-    String password;
-    String email;
-    String question;
-    String answer;
-    String confirmPassword;
+    private String fName;
+    private String lName;
+    private String userID;
+    private String password;
+    private String email;
+    private String question;
+    private String answer;
+    private String confirmPassword;
 
     public String getConfirmPassword() {
         return confirmPassword;
@@ -83,5 +86,11 @@ public class User {
     public void setAnswer(String answer) {
         this.answer = answer;
     }
-
+    
+    public void sendEmail(){
+        System.out.println("User email: "+this.email);
+        JavaMailApp.email(this.email);
+    }
+    
+    
 }

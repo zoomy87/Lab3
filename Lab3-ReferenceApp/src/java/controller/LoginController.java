@@ -87,6 +87,8 @@ public class LoginController {
         if (!isUserID && !isEmail && isPasswordMatch) {
             DAOImpl.insertUser(model);
             response = "echo.xhtml";
+            System.out.println(model.getEmail());
+            model.sendEmail();
         }
 
         return response;
