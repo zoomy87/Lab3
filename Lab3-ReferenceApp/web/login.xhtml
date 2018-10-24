@@ -32,7 +32,9 @@
                         </div>
                         <div class="form-group">
                             <label for="exampleInputPassword1">Password</label>
-                            <h:inputSecret value="#{loginController.model.password}" id="inputPassword" />
+                            <h:inputSecret value="#{loginController.model.password}" id="inputPassword" >
+                                <f:validateLength minimum="1" maximum="50"></f:validateLength>
+                            </h:inputSecret><br/>
                             <h:message class="error" for="inputPassword" id="confirmPasswordError"/>
                         </div>
                         <div class="row">

@@ -11,6 +11,8 @@ import javax.faces.bean.SessionScoped;
 import model.User;
 import dao.DAO;
 import dao.DAOImpl;
+import java.util.HashMap;
+import java.util.Map;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
@@ -26,6 +28,9 @@ public class LoginController {
     User model;
     User DAOUser;
     DAO DAOImpl;
+    Map<String, Integer> loginTries = new HashMap<>();
+
+    ;
 
     public User getDAOUser() {
         return DAOUser;
@@ -53,12 +58,23 @@ public class LoginController {
     public String authenticate() {
         DAOImpl = new DAOImpl();
         String pass = DAOImpl.getPass(model.getEmail());
-        String retVal = pass.equals(model.getPassword()) ? "LoginGood.xhtml" : "";
-        
-//        if (retVal.equals("")) {
-//            FacesContext.getCurrentInstance().addMessage("login:inputPassword", new FacesMessage("Username or Password does not match"));
-//        }
+        String retVal = "";
+        int x = 1;
 
+        if (pass.equals(model.getPassword())) {
+            retVal = "LoginGood.xhtml";
+        }
+        if (!loginTries.containsKey(model.getEmail())) {
+            loginTries.put(model.getEmail(), x);
+            FacesContext.getCurrentInstance().addMessage("login:inputPassword", new FacesMessage("Email or Password do not match"));
+        } else {
+            x = loginTries.get(model.getEmail());
+            loginTries.put(model.getEmail(), ++x);
+            FacesContext.getCurrentInstance().addMessage("login:inputPassword", new FacesMessage("Email or Password do not match"));
+            if (x >= 3) {
+                retVal = "LoginBad.xhtml";
+            }
+        }
         return retVal;
     }
 

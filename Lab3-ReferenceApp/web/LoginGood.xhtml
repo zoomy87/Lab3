@@ -26,7 +26,8 @@
             <div class="row">
                 <div class="col-md-4"></div>
                 <div class="col-md-4">
-                    <h3 class="text-center">Successful</h3>
+                    <h3 class="text-center">Login Successful</h3>
+                    <h3 class="text-center">Welcome <h:outputText value="#{loginController.DAOUser.fName}" />, <h:outputText value="#{loginController.DAOUser.lName}" /></h3>
                     <hr />
                     <h:form>
                         <div class="form-group">
@@ -39,7 +40,7 @@
                         </div>
                         <div class="form-group">
                             <label for="exampleInputEmail1">User ID</label>:
-                            <h:outputText value="#{loginController.DAOUser.email}" />
+                            <h:outputText value="#{loginController.DAOUser.userID}" />
                         </div>
                         <div class="form-group">
                             <label for="exampleInputEmail1">Password</label>:
