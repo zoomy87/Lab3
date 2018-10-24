@@ -149,7 +149,7 @@ public class DAOImpl implements DAO {
 
     @Override
     public String getPass(String email) {
-        String retVal = null;
+        String retVal = "";
 
         try {
             Class.forName("org.apache.derby.jdbc.ClientDriver");
