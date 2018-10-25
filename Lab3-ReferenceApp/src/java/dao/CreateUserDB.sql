@@ -18,3 +18,6 @@ INSERT INTO Users ( lName, fName, userID, password, question, answer, email )
 select * from USERS;
 
 select * from users where email ='ek@email.com';
+
+UPDATE USERS set fName='Eric', lName='Zumbahlen', userID='ejzumba', password='AwesomePossum', question= 'What''s your favorite Color', answer='blue', email='ez@email.com'
+    where userId='ejzumba';

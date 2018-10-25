@@ -22,7 +22,17 @@ public class User {
     private String question;
     private String answer;
     private String confirmPassword;
+    private String activeId;
+    private String activeEmail;
 
+    public String getActiveEmail() {
+        return activeEmail;
+    }
+
+    public void setActiveEmail(String activeEmail) {
+        this.activeEmail = activeEmail;
+    }
+    
     public String getConfirmPassword() {
         return confirmPassword;
     }
@@ -86,10 +96,18 @@ public class User {
     public void setAnswer(String answer) {
         this.answer = answer;
     }
+
+    public String getActiveId() {
+        return activeId;
+    }
+
+    public void setActiveId(String activeId) {
+        this.activeId = activeId;
+    }
     
     public void sendEmail(){
         System.out.println("User email: "+this.email);
-        JavaMailApp.email(this.email);
+        JavaMailApp.email(this);
     }
     
     

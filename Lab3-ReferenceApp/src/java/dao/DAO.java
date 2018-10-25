@@ -15,6 +15,8 @@ public interface DAO {
     
     public int insertUser(User user);
     
+    public int updateUser(User user);
+    
     public boolean checkUserEmail(User user);
     
     public boolean checkUserID(User user);

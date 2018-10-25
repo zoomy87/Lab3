@@ -140,6 +140,7 @@ public class DAOImpl implements DAO {
                 retVal.setQuestion(rs.getString("question"));
                 retVal.setAnswer(rs.getString("answer"));
                 retVal.setEmail(rs.getString("email"));
+                retVal.setActiveId(retVal.getUserID());
             }
         } catch (SQLException ex) {
 
@@ -173,4 +174,40 @@ public class DAOImpl implements DAO {
         }
         return retVal;
     }
+
+    @Override
+    public int updateUser(User user) {
+        int rowCount = 0;
+        try {
+            Class.forName("org.apache.derby.jdbc.ClientDriver");
+        } catch (ClassNotFoundException e) {
+            System.err.println(e.getMessage());
+            System.exit(0);
+        }
+        try {
+            Connection DBConn = DriverManager.getConnection(myDB, "itkstu", "student");
+
+            String insertString;
+            insertString = "UPDATE USERS set fName= ?, lName=?, userID=?, password=?, question= ?, answer=?, email=? where userId=? ";
+            PreparedStatement pstmt = DBConn.prepareStatement(insertString);
+            pstmt.setString(1, user.getfName());
+            pstmt.setString(2, user.getlName());
+            pstmt.setString(3, user.getUserID());
+            pstmt.setString(4, user.getPassword());
+            pstmt.setString(5, user.getQuestion());
+            pstmt.setString(6, user.getAnswer());
+            pstmt.setString(7, user.getEmail());
+            pstmt.setString(8, user.getActiveId());
+
+            rowCount = pstmt.executeUpdate();
+            System.out.println("insert string =" + insertString +"rowCount: "+rowCount);
+            DBConn.close();
+        } catch (SQLException ex) {
+            log.log(Level.SEVERE, null, ex);
+        }
+        return rowCount;
+    }
+    
+    
+    
 }

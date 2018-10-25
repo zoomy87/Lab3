@@ -123,5 +123,35 @@ public class LoginController {
 
         return "";
     }
+    
+    public void updateUser(){
+        String response = "";
+        DAOImpl = new DAOImpl();
+        boolean isEmail = DAOImpl.checkUserEmail(model);
+        boolean isUserID = DAOImpl.checkUserID(model);
+        boolean isPasswordMatch = model.getPassword().equals(model.getConfirmPassword());
+        
+        if(model.getActiveEmail().equals(model.getEmail())){
+            isEmail= false;
+        }
+        if (isEmail) {
+            FacesContext.getCurrentInstance().addMessage("update:email", new FacesMessage("Email is already used"));
+        }
+        
+        if(model.getActiveId().equals(model.getUserID())){
+            isUserID= false;
+        }    
+        if (isUserID) {
+            FacesContext.getCurrentInstance().addMessage("update:userID", new FacesMessage("User ID is already taken"));
+        }
+
+        if (!isPasswordMatch) {
+            FacesContext.getCurrentInstance().addMessage("update:password", new FacesMessage("Passwords do not match"));
+        }
+
+        if (!isUserID && !isEmail && isPasswordMatch) {
+            
+        }
+    }
 
 }

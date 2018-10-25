@@ -12,6 +12,9 @@ html {
 body {
   margin: 0;
 }
+
+#inputPassword{position: relative;left: 10px;}
+
 article,
 aside,
 details,

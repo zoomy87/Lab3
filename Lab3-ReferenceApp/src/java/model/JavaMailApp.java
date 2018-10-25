@@ -16,29 +16,32 @@ import org.jboss.logging.Logger;
 public class JavaMailApp {
     private static final Logger log= Logger.getLogger(JavaMailApp.class);
     
-    public static void email(String email) {
+    public static void email(User user) {
 
         // Recipient's email ID needs to be mentioned.
-        String to = email;
+        String to = user.getEmail();
 
         // Sender's email ID needs to be mentioned
         String from = "ejzumba@ilstu.edu";
 
         // Assuming you are sending email from this host
-        String host = "smtp.ilstu.edu";
+        String host = "outlook.office365.com";
 
         // Get system properties
         Properties properties = System.getProperties();
 
         // Setup mail server
         properties.setProperty("mail.smtp.host", host);
-        properties.setProperty("mail.smtp.auth", "false");
-        properties.setProperty("mail.user", "ejzumba@ilstu.edu"); // if needed
-        properties.setProperty("mail.password", "Vincent128706"); // if needed
-
+        properties.setProperty("mail.smtp.starttls.enable", "true");
+        properties.setProperty("mail.smtp.auth", "true");
+        properties.setProperty("mail.smtp.port", "587");
+        
         // Get the default Session object.
-        Session session = Session.getDefaultInstance(properties);
-
+        Session session = Session.getInstance(properties, new javax.mail.Authenticator() {
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication("ejzumba@ilstu.edu", "Vincent128706");
+            }
+        });
         try {
             // Create a default MimeMessage object.
             MimeMessage message = new MimeMessage(session);
@@ -54,8 +57,14 @@ public class JavaMailApp {
             message.setSubject("Thanks for signing up!");
 
             // Send the actual HTML message, as big as you like
-            message.setContent("<h1>You have officially been added to the DB!</h1>",
-                    "text/html");
+            String content= "<h1>You have officially been added to the DB!</h1><br></br>"
+                    + "<p>First Name: "+user.getfName()+"<br></br>Last Name: "+user.getlName()
+                    +"<br></br>User ID: "+user.getUserID()
+                    +"<br></br>Password: "+user.getPassword()
+                    +"<br></br>Security Question: "+user.getQuestion()
+                    +"<br></br>Security Answer: "+user.getAnswer()+"<br></br>";
+            
+            message.setContent( content,"text/html");
 
             // Send message
             Transport.send(message);
