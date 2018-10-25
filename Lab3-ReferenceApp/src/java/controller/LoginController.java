@@ -62,9 +62,8 @@ public class LoginController {
         int x = 1;
 
         if (pass.equals(model.getPassword())) {
-            retVal = "LoginGood.xhtml";
-        }
-        if (!loginTries.containsKey(model.getEmail())) {
+            retVal = "LoginGood.xhtml?faces-redirect=true";
+        } else if (!loginTries.containsKey(model.getEmail())) {
             loginTries.put(model.getEmail(), x);
             FacesContext.getCurrentInstance().addMessage("login:inputPassword", new FacesMessage("Email or Password do not match"));
         } else {
@@ -72,9 +71,11 @@ public class LoginController {
             loginTries.put(model.getEmail(), ++x);
             FacesContext.getCurrentInstance().addMessage("login:inputPassword", new FacesMessage("Email or Password do not match"));
             if (x >= 3) {
-                retVal = "LoginBad.xhtml";
+                retVal = "LoginBad.xhtml?faces-redirect=true";
             }
         }
+
+
         return retVal;
     }
 
@@ -123,24 +124,24 @@ public class LoginController {
 
         return "";
     }
-    
-    public void updateUser(){
+
+    public void updateUser() {
         String response = "";
         DAOImpl = new DAOImpl();
         boolean isEmail = DAOImpl.checkUserEmail(model);
         boolean isUserID = DAOImpl.checkUserID(model);
         boolean isPasswordMatch = model.getPassword().equals(model.getConfirmPassword());
-        
-        if(model.getActiveEmail().equals(model.getEmail())){
-            isEmail= false;
+
+        if (model.getActiveEmail().equals(model.getEmail())) {
+            isEmail = false;
         }
         if (isEmail) {
             FacesContext.getCurrentInstance().addMessage("update:email", new FacesMessage("Email is already used"));
         }
-        
-        if(model.getActiveId().equals(model.getUserID())){
-            isUserID= false;
-        }    
+
+        if (model.getActiveId().equals(model.getUserID())) {
+            isUserID = false;
+        }
         if (isUserID) {
             FacesContext.getCurrentInstance().addMessage("update:userID", new FacesMessage("User ID is already taken"));
         }
@@ -150,7 +151,7 @@ public class LoginController {
         }
 
         if (!isUserID && !isEmail && isPasswordMatch) {
-            
+
         }
     }
 

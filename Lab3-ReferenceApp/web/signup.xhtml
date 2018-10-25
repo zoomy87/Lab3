@@ -30,17 +30,17 @@
                     <h:form id="signUp">
                         <div class="form-group">
                             <label for="exampleInputEmail1">First Name</label>
-                            <h:inputText class="form-control input-sm" id="fName" value="#{loginController.model.fName}"> 
-                                <f:validateLength minimum="2" maximum="25"></f:validateLength>
+                            <h:inputText class="form-control input-sm" id="FirstName" value="#{loginController.model.fName}"> 
+                                <f:validateLength minimum="2" maximum="25"/>
                             </h:inputText>
-                            <h:message class="error" for="fName" id="fNameError" style="color:red"/>
+                            <h:message class="error" for="FirstName" id="fNameError" style="color:red"/>
                         </div>
                         <div class="form-group">
                             <label for="exampleInputPassword1">Last Name</label>
-                            <h:inputText class="form-control input-sm" id="lName" value="#{loginController.model.lName}" > 
-                                <f:validateLength minimum="2" maximum="25" ></f:validateLength>
+                            <h:inputText class="form-control input-sm" id="LastName" value="#{loginController.model.lName}" > 
+                                <f:validateLength minimum="2" maximum="25" />
                             </h:inputText>
-                            <h:message class="error" for="fName" id="lNameError" style="color:red"/>
+                            <h:message class="error" for="LastName" id="lNameError" style="color:red"/>
                         </div>
                         <div class="form-group">
                             <label for="exampleInputEmail1">User ID</label>
@@ -49,7 +49,9 @@
                         </div>
                         <div class="form-group">
                             <label for="exampleInputEmail1">Password</label>
-                            <h:inputSecret class="form-control input-sm" id="password" value="#{loginController.model.password}" />
+                            <h:inputSecret class="form-control input-sm" id="password" value="#{loginController.model.password}" >
+                                <f:validateRegex pattern ="((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})"/>
+                            </h:inputSecret>
                             <h:message class="error" for="password" id="confirmPasswordError" style="color:red"/>
                         </div>
                         <div class="form-group" id="cpass">
@@ -80,17 +82,4 @@
             </div>
         </div>
     </h:body>
-    <!--    <script lang="javascript">
-            $.ready(){
-                function confirmPass(){
-                    var pass= document.getElementById("password");
-                    var cpass= document.getElementById("confirmPassword");
-                    if(pass !== cpass){
-                        document.appendChild("Passwords do not match!")
-                    }
-                }
-                
-                $("#confirmPassword").keyup(confirmPass());
-            }
-        </script>-->
 </html>
