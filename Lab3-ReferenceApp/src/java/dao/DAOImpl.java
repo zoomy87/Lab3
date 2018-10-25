@@ -141,6 +141,8 @@ public class DAOImpl implements DAO {
                 retVal.setAnswer(rs.getString("answer"));
                 retVal.setEmail(rs.getString("email"));
                 retVal.setActiveId(retVal.getUserID());
+                retVal.setActiveEmail(retVal.getEmail());
+                retVal.setActivePassword(retVal.getPassword());
             }
         } catch (SQLException ex) {
 

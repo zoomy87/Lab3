@@ -15,6 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import org.jboss.logging.Logger;
 
 /**
  *
@@ -25,10 +26,11 @@ import javax.faces.context.FacesContext;
 @ManagedBean
 public class LoginController {
 
-    User model;
-    User DAOUser;
-    DAO DAOImpl;
-    Map<String, Integer> loginTries = new HashMap<>();
+    private static final Logger log = Logger.getLogger(LoginController.class);
+    private User model;
+    private User DAOUser;
+    private DAO DAOImpl;
+    private Map<String, Integer> loginTries = new HashMap<>();
 
     ;
 
@@ -112,47 +114,53 @@ public class LoginController {
 //         
     }
 
-    public String response() {
-        String response;
-        DAOImpl = new DAOImpl();
-
-        if (!DAOImpl.checkUserEmail(model)) {
-            DAOImpl.insertUser(model);
-        } else {
-            FacesContext.getCurrentInstance().addMessage("signUp:email", new FacesMessage("Email already exists in database"));
-        }
-
-        return "";
-    }
-
-    public void updateUser() {
+//    public String response() {
+//        String response;
+//        DAOImpl = new DAOImpl();
+//
+//        if (!DAOImpl.checkUserEmail(model)) {
+//            DAOImpl.insertUser(model);
+//        } else {
+//            FacesContext.getCurrentInstance().addMessage("signUp:email", new FacesMessage("Email already exists in database"));
+//        }
+//
+//        return "";
+//    }
+    
+    public String updateUser(){
         String response = "";
         DAOImpl = new DAOImpl();
-        boolean isEmail = DAOImpl.checkUserEmail(model);
-        boolean isUserID = DAOImpl.checkUserID(model);
-        boolean isPasswordMatch = model.getPassword().equals(model.getConfirmPassword());
-
-        if (model.getActiveEmail().equals(model.getEmail())) {
-            isEmail = false;
+        boolean isEmail = DAOImpl.checkUserEmail(DAOUser);
+        boolean isUserID = DAOImpl.checkUserID(DAOUser);
+        boolean isPasswordMatch = DAOUser.getPassword().equals(DAOUser.getConfirmPassword());
+        
+        log.info("Password: " + DAOUser.getPassword());
+        if(DAOUser.getActiveEmail().equals(DAOUser.getEmail())){
+            isEmail= false;
         }
         if (isEmail) {
             FacesContext.getCurrentInstance().addMessage("update:email", new FacesMessage("Email is already used"));
         }
-
-        if (model.getActiveId().equals(model.getUserID())) {
-            isUserID = false;
-        }
+        
+        if(DAOUser.getActiveId().equals(DAOUser.getUserID())){
+            isUserID= false;
+        }    
         if (isUserID) {
             FacesContext.getCurrentInstance().addMessage("update:userID", new FacesMessage("User ID is already taken"));
         }
 
         if (!isPasswordMatch) {
             FacesContext.getCurrentInstance().addMessage("update:password", new FacesMessage("Passwords do not match"));
+        }else if(DAOUser.getPassword().isEmpty()){
+            DAOUser.setPassword(DAOUser.getActivePassword());
         }
-
+        
         if (!isUserID && !isEmail && isPasswordMatch) {
-
+            Integer i= 1;
+            model= i.equals(DAOImpl.updateUser(DAOUser))? DAOUser:model;
+            response= "LoginGood.xhtml?faces-redirect=true";
         }
+        return response;
     }
 
 }
