@@ -5,18 +5,41 @@
  */
 package model;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  *
  * @author ejzumba
  */
 public class User {
-    String fName;
-    String lName;
-    String userID;
-    String password;
-    String email;
-    String question;
-    String answer;
+
+    private String fName;
+    private String lName;
+    private String userID;
+    private String password;
+    private String email;
+    private String question;
+    private String answer;
+    private String confirmPassword;
+    private String activeId;
+    private String activeEmail;
+
+    public String getActiveEmail() {
+        return activeEmail;
+    }
+
+    public void setActiveEmail(String activeEmail) {
+        this.activeEmail = activeEmail;
+    }
+    
+    public String getConfirmPassword() {
+        return confirmPassword;
+    }
+
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
+    }
 
     public String getfName() {
         return fName;
@@ -74,7 +97,18 @@ public class User {
         this.answer = answer;
     }
 
+    public String getActiveId() {
+        return activeId;
+    }
+
+    public void setActiveId(String activeId) {
+        this.activeId = activeId;
+    }
     
-
-
+    public void sendEmail(){
+        System.out.println("User email: "+this.email);
+        JavaMailApp.email(this);
+    }
+    
+    
 }

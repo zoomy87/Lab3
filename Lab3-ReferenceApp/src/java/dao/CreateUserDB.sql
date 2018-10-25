@@ -4,11 +4,9 @@ create table USERS (
     lName varchar (50),
     userID varchar (50) ,
     password varchar(50),
-    question varchar (200),
-    answer varchar (200),
-    email varchar (150),
-primary key (userID),
-unique(email)
+    question varchar (50),
+    answer varchar (50),
+    email varchar (50)
 );
 
 INSERT INTO Users ( fName, lName, userID, password, question, answer, email ) 
@@ -20,3 +18,6 @@ INSERT INTO Users ( lName, fName, userID, password, question, answer, email )
 select * from USERS;
 
 select * from users where email ='ek@email.com';
+
+UPDATE USERS set fName='Eric', lName='Zumbahlen', userID='ejzumba', password='AwesomePossum', question= 'What''s your favorite Color', answer='blue', email='ez@email.com'
+    where userId='ejzumba';
