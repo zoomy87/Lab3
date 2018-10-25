@@ -24,6 +24,17 @@ public class User {
     private String confirmPassword;
     private String activeId;
     private String activeEmail;
+    private String activePassword;
+
+    public String getActivePassword() {
+        return activePassword;
+    }
+
+    public void setActivePassword(String activePassword) {
+        this.activePassword = activePassword;
+    }
+    
+    
 
     public String getActiveEmail() {
         return activeEmail;
