@@ -34,8 +34,8 @@ public class LoginController {
     private Map<String, Integer> loginTries = new HashMap<>();
     private Map <String, Boolean> loggedInMap= new HashMap<>();
     
-    @ManagedProperty(value = "#{navigationBean}")
-    private NavigationBean navigationBean;
+//    @ManagedProperty(value = "#{navigationBean}")
+//    private NavigationBean navigationBean;
     
 
     public User getDAOUser() {

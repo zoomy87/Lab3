@@ -35,10 +35,10 @@ public class LoginFilter implements Filter {
 		if (loginBean == null || !loginBean.getIsLoggedIn()) {
 			String contextPath = ((HttpServletRequest)request).getContextPath();
 			((HttpServletResponse)response).sendRedirect(contextPath + "/login.xhtml");
-		}else{
+		}//else{
 		
                     chain.doFilter(request, response);
-                }
+                //}
 	}
 
 	public void init(FilterConfig config) throws ServletException {

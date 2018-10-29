@@ -11,7 +11,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>Faces Servlet</servlet-name>
-        <url-pattern>*.xhtml</url-pattern>
+        <url-pattern>/faces/*</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
@@ -20,17 +20,17 @@
     </session-config>
     <!-- By default go to secured welcome page -->
 	<welcome-file-list>
-		<welcome-file>login.xhtml</welcome-file>
+		<welcome-file>faces/login.xhtml</welcome-file>
 	</welcome-file-list>
         
     	<!-- Login filter -->
-	<filter>
+<!--	<filter>
 		<filter-name>LoginFilter</filter-name>
 		<filter-class>filter.LoginFilter</filter-class>
 	</filter>
-	<!-- Set the login filter to secure all the pages in the /secured/* path of the application  -->
+	 Set the login filter to secure all the pages in the /secured/* path of the application  
 	<filter-mapping>
 		<filter-name>LoginFilter</filter-name>
 		<url-pattern>/*</url-pattern>
-	</filter-mapping>
+	</filter-mapping>-->
 </web-app>
