@@ -13,6 +13,7 @@ import dao.DAO;
 import dao.DAOImpl;
 import java.util.HashMap;
 import java.util.Map;
+import javax.faces.application.ConfigurableNavigationHandler;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.context.FacesContext;
@@ -167,8 +168,16 @@ public class LoginController {
         return response;
     }
 
-    public boolean getIsLoggedIn() {
-        return isLoggedIn;
+    public String getIsLoggedIn() {
+        String navi = null;
+
+        if (!isLoggedIn) {
+
+            FacesContext fc = FacesContext.getCurrentInstance();
+            ConfigurableNavigationHandler nav = (ConfigurableNavigationHandler) fc.getApplication().getNavigationHandler();
+            nav.performNavigation("login.xhtml?faces-redirect=true");
+        }
+        return navi;
     }
 
     public Map<String, Boolean> getLoggedInMap() {

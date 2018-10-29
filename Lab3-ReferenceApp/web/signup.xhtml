@@ -50,7 +50,7 @@
                         <div class="form-group">
                             <label for="exampleInputEmail1">Password</label>
                             <h:inputSecret class="form-control input-sm" id="password" value="#{loginController.model.password}" >
-                                <f:validateRegex pattern ="((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})"/>
+                                <f:validateRegex pattern ="((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})" />
                             </h:inputSecret>
                             <h:message class="error" for="password" id="confirmPasswordError" style="color:red"/>
                         </div>
