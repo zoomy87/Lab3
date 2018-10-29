@@ -14,6 +14,7 @@ import dao.DAOImpl;
 import java.util.HashMap;
 import java.util.Map;
 import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.context.FacesContext;
 import org.jboss.logging.Logger;
 
@@ -21,7 +22,6 @@ import org.jboss.logging.Logger;
  *
  * @author ejzumba
  */
-//@Named(value = "loginController")
 @SessionScoped
 @ManagedBean
 public class LoginController {
@@ -30,9 +30,13 @@ public class LoginController {
     private User model;
     private User DAOUser;
     private DAO DAOImpl;
+    private boolean isLoggedIn= false;
     private Map<String, Integer> loginTries = new HashMap<>();
-
-    ;
+    private Map <String, Boolean> loggedInMap= new HashMap<>();
+    
+    @ManagedProperty(value = "#{navigationBean}")
+    private NavigationBean navigationBean;
+    
 
     public User getDAOUser() {
         return DAOUser;
@@ -64,6 +68,8 @@ public class LoginController {
         int x = 1;
 
         if (pass.equals(model.getPassword())) {
+            loggedInMap.put(model.getEmail(), Boolean.TRUE);
+            isLoggedIn=true;
             retVal = "LoginGood.xhtml?faces-redirect=true";
         } else if (!loginTries.containsKey(model.getEmail())) {
             loginTries.put(model.getEmail(), x);
@@ -76,8 +82,6 @@ public class LoginController {
                 retVal = "LoginBad.xhtml?faces-redirect=true";
             }
         }
-
-
         return retVal;
     }
 
@@ -162,5 +166,15 @@ public class LoginController {
         }
         return response;
     }
+
+    public boolean getIsLoggedIn() {
+        return isLoggedIn;
+    }
+
+    public Map<String, Boolean> getLoggedInMap() {
+        return loggedInMap;
+    }
+    
+    
 
 }
